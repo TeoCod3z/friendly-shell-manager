@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+import os
+from colorama import Fore, Style
+import readline
+readline.parse_and_bind("tab: complete") # Allows navigating through history with arrow keys
+
+cos = ""
+comm = ""
+print(Fore.YELLOW + "Welcome to fsm!" + Style.RESET_ALL)
+while True:
+
+    path = os.getcwd()
+    print(Fore.CYAN + "~ " + path + Style.RESET_ALL)
+    
+    comm = input(Fore.BLUE + "❯ " + Style.RESET_ALL)
+             
+    if comm == "home":
+        os.chdir(os.path.expanduser("~"))
+        continue
+    elif comm == "ms":
+        os.system(f"ls -F --color=auto")
+        continue
+    elif comm == "crc":
+        nCart = input("Name for the new folder: ")
+        os.system(f"mkdir {nCart}")
+        continue
+    
+    elif comm == "ent":
+        cos = input("Where to?: ")
+        try:
+            os.chdir(cos)
+        except:
+            print(Fore.RED + "Error: directory does not exist" + Style.RESET_ALL)
+            continue
+    elif comm == "rin":
+        cos = input("What?: ")
+        nNome = input(f"New name for {cos}: ")
+        os.system(f"mv {cos} {nNome}")
+        cos = ""
+    elif comm == "canc":
+        cos = input("What?: ")
+        os.system(f"rm -rf {cos}")
+        cos = ""
+    elif comm == "spt":
+        cos = input("What?: ")
+        try:
+            sposta = input(f"Move {cos} to: ")
+            os.system(f"mv {cos} ~/{sposta}/")
+            cos = ""
+        except:
+            print(Fore.RED + "Error: file or directory not found" + Style.RESET_ALL)
+            continue
+    elif comm == "cp":
+        cos = input("What?: ")
+        try:
+            copia = input(f"Copy {cos} to: ")
+            os.system(f"cp -r {cos} ~/{copia}/")
+            cos = ""
+        except:
+            print(Fore.RED + "Error: file or directory not found" + Style.RESET_ALL)
+            continue
+
+    elif comm == "q":
+        break
+
+    elif comm == "help" or comm == "h":
+            print("\n--- FSM COMMAND GUIDE ---")
+            print("home : Go to home directory")
+            print("ms   : Show current folder contents")
+            print("crc  : Create a new folder")
+            print("ent  : Enter a folder")
+            print("rin  : Rename a file or folder")
+            print("canc : Delete (Remove) a file or folder")
+            print("spt  : Move a file or folder")
+            print("cp   : Copy a file or folder")
+            print("q    : Exit FSM")
+            print("-------------------------")
+            print("Note: You can also use any standard Linux command (e.g., neofetch, htop, micro)!\n")
+            continue
+
+    else:
+        os.system(f"{comm}")
